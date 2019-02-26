@@ -20,7 +20,7 @@ The AmpliconPipeline can be installed and run via conda.
 
 1. Install AmpliconPipeline and activate the environmnet
 ```
-git clone https://github.com/forestdussault/AmpliconPipeline.git
+git clone https://github.com/lowandrew/AmpliconPipeline.git
 cd AmpliconPipeline
 export PATH="/path/to/AmpliconPipeline:$PATH"
 conda create --name AmpliconPipeline --file requirements.txt
