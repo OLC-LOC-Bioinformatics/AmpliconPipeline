@@ -37,14 +37,15 @@ dependencies:
   - boost=1.64.0=py35_4
   - boost-cpp=1.64.0=1
   - bzip2=1.0.6=1
-  - ca-certificates=2018.1.18=0
+  - ca-certificates=2019.3.9=hecc5488_0
   - cachecontrol=0.12.3=py35_0
   - cairo=1.14.10=0
-  - certifi=2018.1.18=py35_0
+  - certifi=2018.8.24=py35_1001
   - cffi=1.11.2=py35_0
   - chardet=3.0.4=py35_0
   - click=6.7=py_1
   - cryptography=2.1.4=py35_0
+  - curl=7.60.0=0
   - cutadapt=1.15=py35_0
   - cycler=0.10.0=py35_0
   - cython=0.27.3=py35_0
@@ -92,10 +93,12 @@ dependencies:
   - libgcc-ng=7.2.0=hdf63c60_3
   - libgfortran=3.0.0=1
   - libgfortran-ng=7.2.0=hdf63c60_3
+  - libiconv=1.15=h470a237_4
   - libpng=1.6.34=0
   - libsodium=1.0.15=1
   - libssh2=1.8.0=2
   - libstdcxx-ng=7.2.0=hdf63c60_3
+  - libtiff=4.0.9=he6b73bb_1
   - libxcb=1.12=1
   - libxml2=2.9.7=0
   - lockfile=0.12.2=py35_0
@@ -117,7 +120,7 @@ dependencies:
   - notebook=5.4.0=py35_0
   - numpy=1.12.1=py35_blas_openblas_200
   - openblas=0.2.19=2
-  - openssl=1.0.2n=0
+  - openssl=1.0.2p=h470a237_2
   - pandas=0.22.0=py35_0
   - pandoc=2.1.1=0
   - pandocfilters=1.4.1=py35_0
