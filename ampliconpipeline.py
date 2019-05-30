@@ -113,7 +113,7 @@ def cli(ctx, inputdir, outdir, metadata, classifier, evaluate_quality, filtering
                                  filtering_flag=filtering_flag,
                                  trim_left_f=trim_left_f, trim_left_r=trim_left_r,
                                  trunc_len_f=trunc_len_f, trunc_len_r=trunc_len_r,
-                                 exclude_choroplast=exclude_chloroplast)
+                                 exclude_chloroplast=exclude_chloroplast)
     logging.info('QIIME2 Pipeline Completed')
     ctx.exit()
 
