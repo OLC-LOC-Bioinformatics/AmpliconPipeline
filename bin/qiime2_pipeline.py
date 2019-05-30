@@ -525,7 +525,7 @@ def validate_metadata(sample_metadata_path):
 
 
 def run_pipeline(base_dir, data_artifact_path, sample_metadata_path, classifier_artifact_path,
-                 trim_left_f, trim_left_r, trunc_len_f, trunc_len_r, filtering_flag=False):
+                 trim_left_f, trim_left_r, trunc_len_f, trunc_len_r, filtering_flag=False, exclude_chloroplast=False):
     """
     1. Load sequence data and sample metadata file into a QIIME 2 Artifact
     2. Filter, denoise reads with dada2
@@ -545,6 +545,7 @@ def run_pipeline(base_dir, data_artifact_path, sample_metadata_path, classifier_
     :param trim_left_r: Number of bases to trim from 5' of reverse read
     :param trunc_len_f: Number of bases for forward read truncation
     :param trunc_len_r: Number of bases for reverse read truncation
+    :param exclude_chloroplast: If True, filter out reads that map to chloroplast from analysis.
     """
 
     # Load seed object
@@ -591,6 +592,15 @@ def run_pipeline(base_dir, data_artifact_path, sample_metadata_path, classifier_
         # Run taxonomic analysis
         taxonomy_analysis = classify_taxonomy(base_dir=base_dir, dada2_filtered_rep_seqs=dada2_filtered_rep_seqs,
                                               classifier=classifier)
+
+        if exclude_chloroplast is True:
+            cmd = 'qiime taxa filter-table --i-table {input_table} --i-taxonomy {input_tax} ' \
+                  '--p-exclude chloroplast ' \
+                  '--o-filtered-table {output_table}'.format(input_table=os.path.join(base_dir, 'table-dada2.qza'),
+                                                             input_tax=os.path.join(base_dir, 'taxonomy.qza'),
+                                                             output_table=os.path.join(base_dir, 'table-no-chloroplast.qza'))
+            os.system(cmd)
+            dada2_filtered_table = load_artifact(os.path.join(base_dir, 'table-no-chloroplast.qza'))
 
         # Visualize taxonomy
         visualize_taxonomy(base_dir=base_dir, metadata_object=metadata_object,

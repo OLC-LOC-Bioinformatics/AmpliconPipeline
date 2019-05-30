@@ -33,6 +33,10 @@ from bin import qiime2_pipeline
               default=False,
               help='Set flag to only proceed to the filtering step of analysis. This is useful for testing/optimizing '
                    'trimming parameters for a full run, or for generating files to be merged for later analysis.')
+@click.option('-ex', '--exclude_chloroplast',
+              is_flag=True,
+              default=False,
+              help='Activate this flag to exclude chloroplast sequences from analysis.')
 @click.option('-eq', '--evaluate_quality',
               is_flag=True,
               default=False,
@@ -57,7 +61,7 @@ from bin import qiime2_pipeline
               help='Set this flag to enable more verbose output.')
 @click.pass_context
 def cli(ctx, inputdir, outdir, metadata, classifier, evaluate_quality, filtering_flag,
-        trim_left_f, trim_left_r, trunc_len_f, trunc_len_r, verbose):
+        trim_left_f, trim_left_r, trunc_len_f, trunc_len_r, verbose, exclude_chloroplast):
     # Logging setup
     if verbose:
         logging.basicConfig(
@@ -108,7 +112,8 @@ def cli(ctx, inputdir, outdir, metadata, classifier, evaluate_quality, filtering
                                  classifier_artifact_path=classifier,
                                  filtering_flag=filtering_flag,
                                  trim_left_f=trim_left_f, trim_left_r=trim_left_r,
-                                 trunc_len_f=trunc_len_f, trunc_len_r=trunc_len_r)
+                                 trunc_len_f=trunc_len_f, trunc_len_r=trunc_len_r,
+                                 exclude_choroplast=exclude_chloroplast)
     logging.info('QIIME2 Pipeline Completed')
     ctx.exit()
 
