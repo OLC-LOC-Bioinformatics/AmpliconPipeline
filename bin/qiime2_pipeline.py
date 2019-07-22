@@ -101,7 +101,7 @@ def dada2_qc(base_dir, demultiplexed_seqs, trim_left_f, trim_left_r, trunc_len_f
     logging.info('trunc_len_r: {}'.format(trunc_len_r))
 
     # Run dada2
-    (dada2_filtered_table, dada2_filtered_rep_seqs) = dada2.methods.denoise_paired(
+    (dada2_filtered_table, dada2_filtered_rep_seqs, denoising_stats) = dada2.methods.denoise_paired(
         demultiplexed_seqs=demultiplexed_seqs, trim_left_f=trim_left_f, trim_left_r=trim_left_r,
         trunc_len_f=trunc_len_f, trunc_len_r=trunc_len_r, max_ee=max_ee, chimera_method=chimera_method,
         n_threads=cpu_count)
