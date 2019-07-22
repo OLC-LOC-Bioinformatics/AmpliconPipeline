@@ -16,15 +16,14 @@ for QIIME 2 via Python can be found in the [QIIME 2 plugin docs](https://docs.qi
 
 ### Installation Instructions
 
-The AmpliconPipeline can be installed and run via conda.
+The AmpliconPipeline can be installed and run via conda. Follow the install instructions for 
+QIIME2 2019.4 at https://docs.qiime2.org/2019.4/install/native/#install-qiime-2-within-a-conda-environment
 
-1. Install AmpliconPipeline and activate the environmnet
+1. Install AmpliconPipeline and activate the environment
 ```
 git clone https://github.com/lowandrew/AmpliconPipeline.git
 cd AmpliconPipeline
-export PATH="/path/to/AmpliconPipeline:$PATH"
-conda env create -f environment.yml
-source activate AmpliconPipeline
+conda activate your_environment_name
 ```
 
 2. Retrieve the classifier trained on the V3-V4 region and drop it into `.../AmpliconPipeline/classifiers`
@@ -34,6 +33,7 @@ curl -L https://ndownloader.figshare.com/files/10970087 -o classifiers/99_V3V4_S
 ```
 
 ### Command Line Arguments
+NOTE: `ampliconpipeline.py` must be used from the root of this directory.
 
 ```
 Usage: ampliconpipeline.py [OPTIONS]

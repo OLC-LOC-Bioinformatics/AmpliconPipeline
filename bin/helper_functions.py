@@ -150,7 +150,7 @@ def create_sampledata_artifact(datadir: str, qiimedir: str) -> str:
           "--type 'SampleData[PairedEndSequencesWithQuality]' " \
           "--input-path {datadir} " \
           "--output-path {qiimeout} " \
-          "--source-format CasavaOneEightSingleLanePerSampleDirFmt " \
+          "--input-format CasavaOneEightSingleLanePerSampleDirFmt " \
           "".format(datadir=datadir, qiimeout=os.path.join(qiimedir, 'paired-sample-data.qza'))
     out, err = execute_command(cmd)
 
