@@ -611,7 +611,7 @@ def run_pipeline(base_dir, data_artifact_path, sample_metadata_path, classifier_
         run_diversity_metrics(base_dir=base_dir, dada2_filtered_table=dada2_filtered_table,
                               phylo_rooted_tree=phylo_rooted_tree, metadata_object=metadata_object)
 
-        with open(os.path.join(base_dir, 'trimming_parameters.txt', 'w')) as f:
+        with open(os.path.join(base_dir, 'trimming_parameters.txt'), 'w') as f:
             f.write('The following trim parameters were passed to dada2 for this run.\n')
             f.write('Forward read, 5\' trim: {} bases\n'.format(trim_left_f))
             f.write('Forward read, 3\' trim: {} bases\n'.format(trunc_len_f))
