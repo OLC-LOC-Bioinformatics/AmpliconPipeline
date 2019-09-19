@@ -33,10 +33,14 @@ from bin import qiime2_pipeline
               default=False,
               help='Set flag to only proceed to the filtering step of analysis. This is useful for testing/optimizing '
                    'trimming parameters for a full run, or for generating files to be merged for later analysis.')
-@click.option('-ex', '--exclude_chloroplast',
+@click.option('-ic', '--include_chloroplast',
               is_flag=True,
               default=False,
-              help='Activate this flag to exclude chloroplast sequences from analysis.')
+              help='Activate this flag to include chloroplast sequences in output.')
+@click.option('-im', '--include_mitochondria',
+              is_flag=True,
+              default=False,
+              help='Activate this flag to include mitochondria sequences in output.')
 @click.option('-eq', '--evaluate_quality',
               is_flag=True,
               default=False,
@@ -61,7 +65,7 @@ from bin import qiime2_pipeline
               help='Set this flag to enable more verbose output.')
 @click.pass_context
 def cli(ctx, inputdir, outdir, metadata, classifier, evaluate_quality, filtering_flag,
-        trim_left_f, trim_left_r, trunc_len_f, trunc_len_r, verbose, exclude_chloroplast):
+        trim_left_f, trim_left_r, trunc_len_f, trunc_len_r, verbose, include_chloroplast, include_mitochondria):
     # Logging setup
     if verbose:
         logging.basicConfig(
@@ -113,7 +117,7 @@ def cli(ctx, inputdir, outdir, metadata, classifier, evaluate_quality, filtering
                                  filtering_flag=filtering_flag,
                                  trim_left_f=trim_left_f, trim_left_r=trim_left_r,
                                  trunc_len_f=trunc_len_f, trunc_len_r=trunc_len_r,
-                                 exclude_chloroplast=exclude_chloroplast)
+                                 include_chloroplast=include_chloroplast, include_mitochondria=include_mitochondria)
     logging.info('QIIME2 Pipeline Completed')
     ctx.exit()
 

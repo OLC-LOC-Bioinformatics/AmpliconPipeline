@@ -525,7 +525,7 @@ def validate_metadata(sample_metadata_path):
 
 
 def run_pipeline(base_dir, data_artifact_path, sample_metadata_path, classifier_artifact_path,
-                 trim_left_f, trim_left_r, trunc_len_f, trunc_len_r, filtering_flag=False, exclude_chloroplast=False):
+                 trim_left_f, trim_left_r, trunc_len_f, trunc_len_r, filtering_flag=False, include_chloroplast=False, include_mitochondria=False):
     """
     1. Load sequence data and sample metadata file into a QIIME 2 Artifact
     2. Filter, denoise reads with dada2
@@ -545,7 +545,8 @@ def run_pipeline(base_dir, data_artifact_path, sample_metadata_path, classifier_
     :param trim_left_r: Number of bases to trim from 5' of reverse read
     :param trunc_len_f: Number of bases for forward read truncation
     :param trunc_len_r: Number of bases for reverse read truncation
-    :param exclude_chloroplast: If True, filter out reads that map to chloroplast from analysis.
+    :param include_chloroplast: If True, include reads that map to chloroplast in the analysis.
+    :param include_mitochondria: If True, include reads that map to mitochondria in the analysis.
     """
 
     # Load seed object
@@ -592,15 +593,23 @@ def run_pipeline(base_dir, data_artifact_path, sample_metadata_path, classifier_
         # Run taxonomic analysis
         taxonomy_analysis = classify_taxonomy(base_dir=base_dir, dada2_filtered_rep_seqs=dada2_filtered_rep_seqs,
                                               classifier=classifier)
-
-        if exclude_chloroplast is True:
+        # filter out chloroplasts and/or mitochondria
+        # note that this step will also remove samples with zero hits
+        if include_chloroplast is False or include_mitochondria is False:
+            if include_chloroplast is False:
+                if include_mitochondria is False:
+                    filterflag = "mitochondria,chloroplast "
+                else:
+                    filterflag = "chloroplast "
+            else:
+                filterflag = "mitochondria "
             cmd = 'qiime taxa filter-table --i-table {input_table} --i-taxonomy {input_tax} ' \
-                  '--p-exclude chloroplast ' \
+                  '--p-exclude {filter_flag} ' \
                   '--o-filtered-table {output_table}'.format(input_table=os.path.join(base_dir, 'table-dada2.qza'),
                                                              input_tax=os.path.join(base_dir, 'taxonomy.qza'),
-                                                             output_table=os.path.join(base_dir, 'table-no-chloroplast.qza'))
+                                                             output_table=os.path.join(base_dir, 'table-filtered.qza'), filter_flag=filterflag)
             os.system(cmd)
-            dada2_filtered_table = load_artifact(os.path.join(base_dir, 'table-no-chloroplast.qza'))
+            dada2_filtered_table = load_artifact(os.path.join(base_dir, 'table-filtered.qza'))
 
         # Visualize taxonomy
         visualize_taxonomy(base_dir=base_dir, metadata_object=metadata_object,
