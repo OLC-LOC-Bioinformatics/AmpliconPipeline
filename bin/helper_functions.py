@@ -183,3 +183,18 @@ def project_setup(outdir: str, inputdir: str) -> str:
     data_artifact_path = create_sampledata_artifact(datadir=os.path.join(outdir, 'data'),
                                                     qiimedir=os.path.join(outdir, 'qiime2'))
     return data_artifact_path
+
+
+def make_interop_summary(inputdir: str, outdir: str):
+    out, err = execute_command("interop_summary " + inputdir)
+    if (out[0:9] == "# Version") and (len(out) > 4000):
+        try:
+            ifile = open(os.path.join(outdir, "interop_summary.csv"), "w")
+            ifile.write(out)
+            ifile.close()
+            logging.info("Made the interop_summary file")
+        except:
+            logging.info("Couldn't write the interop_summary file!")
+    else:
+        logging.info("Something went wrong with interop_summary!")
+

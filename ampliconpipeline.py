@@ -109,6 +109,9 @@ def cli(ctx, inputdir, outdir, metadata, classifier, evaluate_quality, filtering
     if filtering_flag:
         logging.info('FILTERING_FLAG SET. Pipeline will only proceed to DADA2 filtering step.')
 
+    # Make the interop_summary file
+    helper_functions.make_interop_summary(inputdir=inputdir, outdir=outdir)
+
     # Run the full pipeline
     qiime2_pipeline.run_pipeline(base_dir=os.path.join(outdir, 'qiime2'),
                                  data_artifact_path=data_artifact_path,
