@@ -109,6 +109,7 @@ def dada2_qc(base_dir, demultiplexed_seqs, trim_left_f, trim_left_r, trunc_len_f
     # Save artifacts
     dada2_filtered_table.save(os.path.join(base_dir, 'table-dada2.qza'))
     dada2_filtered_rep_seqs.save(os.path.join(base_dir, 'rep-seqs-dada2.qza'))
+    denoising_stats.save(os.path.join(base_dir, 'denoising_stats.qza'))
     logging.info('Completed running DADA2')
 
     return dada2_filtered_table, dada2_filtered_rep_seqs
