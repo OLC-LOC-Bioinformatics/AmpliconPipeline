@@ -109,13 +109,13 @@ def dada2_qc(base_dir, demultiplexed_seqs, trim_left_f, trim_left_r, trunc_len_f
     # Save artifacts
     dada2_filtered_table.save(os.path.join(base_dir, 'table-dada2.qza'))
     dada2_filtered_rep_seqs.save(os.path.join(base_dir, 'rep-seqs-dada2.qza'))
-    denoising_stats.save(os.path.join(base_dir, 'denoising_stats.qza'))
+    denoising_stats.save(os.path.join(base_dir, 'denoising-stats.qza'))
     logging.info('Completed running DADA2')
 
-    return dada2_filtered_table, dada2_filtered_rep_seqs
+    return dada2_filtered_table, dada2_filtered_rep_seqs, denoising_stats
 
 
-def visualize_dada2(base_dir, dada2_filtered_table, dada2_filtered_rep_seqs, metadata_object):
+def visualize_dada2(base_dir, dada2_filtered_table, dada2_filtered_rep_seqs, denoising_stats, metadata_object):
     """
     :param base_dir: Main working directory filepath
     :param dada2_filtered_table: DADA2 filtered table object
@@ -132,16 +132,21 @@ def visualize_dada2(base_dir, dada2_filtered_table, dada2_filtered_rep_seqs, met
     # Prepare sequence table
     feature_table_seqs = feature_table.visualizers.tabulate_seqs(data=dada2_filtered_rep_seqs)
 
+    # Prepare denoising stats table
+    denoising_stats_table = feature_table.visualizers.tabulate_seqs(data=denoising_stats)
+
     # Path setup
     table_dada2_path = os.path.join(base_dir, 'table-dada2-summary.qzv')
     rep_seqs_path = os.path.join(base_dir, 'rep-seqs-summary.qzv')
+    denoising_stats_path = os.path.join(base_dir, 'denoising-stats.qzv')
 
     # Save visualizations
     feature_table_summary.visualization.save(table_dada2_path)
     feature_table_seqs.visualization.save(rep_seqs_path)
+    denoising_stats_table.visualization.save(denoising_stats_path)
     logging.info('Saved {}'.format(table_dada2_path))
     logging.info('Saved {}'.format(rep_seqs_path))
-
+    logging.info('Saved {}'.format(denoising_stats_path))
     return feature_table_summary
 
 
@@ -566,12 +571,12 @@ def run_pipeline(base_dir, data_artifact_path, sample_metadata_path, classifier_
     visualize_demux(base_dir=base_dir, data_artifact=data_artifact)
 
     # Filter & denoise w/dada2
-    (dada2_filtered_table, dada2_filtered_rep_seqs) = dada2_qc(base_dir=base_dir, demultiplexed_seqs=data_artifact,
+    (dada2_filtered_table, dada2_filtered_rep_seqs, denoising_stats) = dada2_qc(base_dir=base_dir, demultiplexed_seqs=data_artifact,
                                                                trim_left_f=trim_left_f, trim_left_r=trim_left_r,
                                                                trunc_len_f=trunc_len_f, trunc_len_r=trunc_len_r)
     # Visualize dada2
     visualize_dada2(base_dir=base_dir, dada2_filtered_table=dada2_filtered_table,
-                    dada2_filtered_rep_seqs=dada2_filtered_rep_seqs, metadata_object=metadata_object)
+                    dada2_filtered_rep_seqs=dada2_filtered_rep_seqs, denoising_stats=denoising_stats, metadata_object=metadata_object)
 
     # Only do these steps if the filtering_flag is false
     if filtering_flag is False:
