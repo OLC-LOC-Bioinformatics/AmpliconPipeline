@@ -133,7 +133,7 @@ def visualize_dada2(base_dir, dada2_filtered_table, dada2_filtered_rep_seqs, den
     feature_table_seqs = feature_table.visualizers.tabulate_seqs(data=dada2_filtered_rep_seqs)
 
     # Prepare denoising stats table
-    denoising_stats_table = feature_table.visualizers.tabulate_seqs(data=denoising_stats)
+    denoising_stats_table = metadata.visualizers.tabulate(denoising_stats.view(qiime2.Metadata))
 
     # Path setup
     table_dada2_path = os.path.join(base_dir, 'table-dada2-summary.qzv')
