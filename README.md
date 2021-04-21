@@ -19,12 +19,13 @@ for QIIME 2 via Python can be found in the [QIIME 2 plugin docs](https://docs.qi
 The AmpliconPipeline can be installed and run via conda. Follow the install instructions for 
 QIIME2 2019.4 at https://docs.qiime2.org/2019.4/install/native/#install-qiime-2-within-a-conda-environment
 
-1. Install AmpliconPipeline and activate the environment, get scikit-learn to the same version as the classifier.
+1. Install AmpliconPipeline and activate the environment, get scikit-learn to the same version as the classifier. Also install illumina-interop.
 ```
-git clone https://github.com/lowandrew/AmpliconPipeline.git
+git clone https://github.com/OLC-LOC-Bioinformatics/AmpliconPipeline.git
 cd AmpliconPipeline
 conda activate your_environment_name
 pip install scikit-learn==0.19.1
+conda install illumina-interop
 ```
 
 2. Retrieve the classifier trained on the V3-V4 region and drop it into `.../AmpliconPipeline/classifiers`
