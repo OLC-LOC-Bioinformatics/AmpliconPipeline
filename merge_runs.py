@@ -150,6 +150,9 @@ def run_merge_pipeline(base_dir, sample_metadata_path, classifier_artifact_path,
         dada2_merged_rep_seqs = filter_run_repseqs(sample_id_file=filtering_list,
                                                    dada2_rep_seqs=dada2_merged_rep_seqs)
 
+    dada2_merged_table.save(os.path.join(base_dir, 'table-dada2.qza'))
+    dada2_merged_rep_seqs.save(os.path.join(base_dir, 'rep-seqs-dada2.qza'))
+
     # Continue pipeline as normal
     # Visualize dada2
     visualize_dada2(base_dir=base_dir,
